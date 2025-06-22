@@ -1,23 +1,32 @@
- const apiUrl = 'https://jsonplaceholder.typicode.com/users';
+async function fetchUserData() {
+    const apiUrl = 'https://jsonplaceholder.typicode.com/users';
 
     const dataContainer = document.getElementById('api-data');
 
     try {
-       
-        const response = await fetch(apiUrl);
+        
+        const response = await fetch(apiUrl); 
 
-        const users = await response.json();
+        const users = await response.json();  
 
         dataContainer.innerHTML = '';
 
-        const userListElement = document.createElement('ul');
+        const userList = document.createElement('ul');
 
         users.forEach(user => {
-            
+        
             const listItem = document.createElement('li');
-            listItem.textContent = user.name; 
-            userListElement.appendChild(listItem); 
+            listItem.textContent = user.name;
+            userList.appendChild(listItem); 
         });
 
-        dataContainer.appendChild(userListElement);
+        dataContainer.appendChild(userList);
 
+    } catch (error) {
+    
+        console.error('Error fetching user data:', error);
+        dataContainer.innerHTML = 'Failed to load user data.';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', fetchUserData);
